@@ -1,0 +1,35 @@
+name: Tests
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+jobs:
+  build:
+    runs-on: macos-latest
+    steps:
+    - uses: actions/checkout@v4
+    - name: Build
+      run: swift build -v
+    - name: Run tests
+      run: swift test -v
+    - name: Run tests
+      run: |
+        swift test -Xswiftc -Xfrontend -Xswiftc -dump-macro-expansions --enable-code-coverage
+    - name: Gather code coverage
+      run: |
+        BUILD_PATH=$(swift build --show-bin-path)
+        xcrun llvm-cov report \
+          $BUILD_PATH/AddPreviewsTests.xctest/Contents/MacOS/AddPreviewsTests \
+          -instr-profile=$BUILD_PATH/codecov/default.profdata \
+          -ignore-filename-regex=".build|Tests" -use-color
+        xcrun llvm-cov export -format="lcov" \
+          $BUILD_PATH/AddPreviewsTests.xctest/Contents/MacOS/AddPreviewsTests \
+          -instr-profile=$BUILD_PATH/codecov/default.profdata \
+          -ignore-filename-regex=".build|Tests" > coverage_report.lcov
+    - name: Upload coverage reports to Codecov
+      uses: codecov/codecov-action@v4.0.1
+      with:
+        token: ${{ secrets.CODECOV_TOKEN }}
+        files: ./coverage_report.lcov
+        verbose: true
