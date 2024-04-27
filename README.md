@@ -6,15 +6,6 @@ A simple macro that automates the process of creating previews in your `PreviewP
 
 Just `import AddPreviews` and attach `@AddPreviews` to your preview struct.
 
-### Before
-```swift
-struct MyView_Previews: PreviewProvider {
-    static var stateOne: some View { MyView(state: .one) }
-    static var stateTwo: some View { MyView(state: .two) }
-}
-```
-
-### After
 ```swift
 import AddPreviews
 
