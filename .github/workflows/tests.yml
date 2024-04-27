@@ -20,11 +20,11 @@ jobs:
       run: |
         BUILD_PATH=$(swift build --show-bin-path)
         xcrun llvm-cov report \
-          $BUILD_PATH/AddPreviewsTests.xctest/Contents/MacOS/AddPreviewsTests \
+          $BUILD_PATH/AddPreviewsPackageTests.xctest/Contents/MacOS/AddPreviewsPackageTests \
           -instr-profile=$BUILD_PATH/codecov/default.profdata \
           -ignore-filename-regex=".build|Tests" -use-color
         xcrun llvm-cov export -format="lcov" \
-          $BUILD_PATH/AddPreviewsTests.xctest/Contents/MacOS/AddPreviewsTests \
+          $BUILD_PATH/AddPreviewsPackageTests.xctest/Contents/MacOS/AddPreviewsPackageTests \
           -instr-profile=$BUILD_PATH/codecov/default.profdata \
           -ignore-filename-regex=".build|Tests" > coverage_report.lcov
     - name: Upload coverage reports to Codecov
