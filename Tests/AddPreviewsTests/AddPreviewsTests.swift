@@ -9,7 +9,7 @@ import AddPreviewsMacros
 final class AddPreviewsTests: XCTestCase {
     override func invokeTest() {
         withMacroTesting(
-            isRecording: false,
+//            isRecording: true,
             macros: ["AddPreviews": AddPreviews.self]
         ) {
             super.invokeTest()
@@ -100,6 +100,9 @@ final class AddPreviewsTests: XCTestCase {
                     nonStaticView.previewDisplayName("nonStaticView")
                 }
             }
+
+            extension MyView_Previews: Sequence & IteratorProtocol {
+            }
             """
         }
     }
@@ -120,6 +123,9 @@ final class AddPreviewsTests: XCTestCase {
                 static var previews: some View {
                     EmptyView()
                 }
+            }
+
+            extension MyView_Previews: Sequence & IteratorProtocol {
             }
             """
         }
@@ -236,6 +242,9 @@ final class AddPreviewsTests: XCTestCase {
                     _14.previewDisplayName("_14")
                     _15.previewDisplayName("_15")
                 }
+            }
+
+            extension MyView_Previews: Sequence & IteratorProtocol {
             }
             """
         }
@@ -364,6 +373,9 @@ final class AddPreviewsTests: XCTestCase {
                     myView.previewDisplayName("myView")
                 }
             }
+
+            extension MyView_Previews: Sequence & IteratorProtocol {
+            }
             """
         }
     }
@@ -427,6 +439,9 @@ final class AddPreviewsTests: XCTestCase {
                     myView.previewDisplayName("myView")
                 }
             }
+
+            extension MyView_Previews: Sequence & IteratorProtocol {
+            }
             """
         }
     }
@@ -489,6 +504,9 @@ final class AddPreviewsTests: XCTestCase {
                 static var previews: some View {
                     myView.previewDisplayName("myView")
                 }
+            }
+
+            extension MyView_Previews: Sequence & IteratorProtocol {
             }
             """
         }

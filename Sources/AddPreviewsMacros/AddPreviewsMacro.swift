@@ -74,6 +74,12 @@ extension AddPreviews: MemberMacro {
     }
 }
 
+extension AddPreviews: ExtensionMacro {
+    public static func expansion(of node: AttributeSyntax, attachedTo declaration: some DeclGroupSyntax, providingExtensionsOf type: some TypeSyntaxProtocol, conformingTo protocols: [TypeSyntax], in context: some MacroExpansionContext) throws -> [ExtensionDeclSyntax] {
+        [try ExtensionDeclSyntax("extension \(type.trimmed): Sequence & IteratorProtocol {}")]
+    }
+}
+
 private func iteratorNextDeclaration(rawMemberIdentifiers: [String]) -> DeclSyntax {
     var decl = """
     mutating func next() -> NamedPreview? {
