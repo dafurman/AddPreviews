@@ -53,38 +53,28 @@ final class AddPreviewsTests: XCTestCase {
                 static private var privateNonViewProperty: Int { 0 }
                 var nonStaticView: some View { EmptyView() }
 
-                struct NamedPreview {
-                    let name: String
-                    let view: any View
-
-                    init(name: String, view: any View) {
-                        self.name = name
-                        self.view = view
-                    }
-                }
-
                 private var iterator = 0
 
-                mutating func next() -> NamedPreview? {
+                mutating func next() -> NamedView? {
                     defer {
                         iterator += 1
                     }
 
                     return switch iterator {
                     case 0:
-                        NamedPreview(name: "fileprivateView", view: Self.fileprivateView)
+                        NamedView(name: "fileprivateView", view: Self.fileprivateView)
                     case 1:
-                        NamedPreview(name: "internalView", view: Self.internalView)
+                        NamedView(name: "internalView", view: Self.internalView)
                     case 2:
-                        NamedPreview(name: "explicitlyInternalView", view: Self.explicitlyInternalView)
+                        NamedView(name: "explicitlyInternalView", view: Self.explicitlyInternalView)
                     case 3:
-                        NamedPreview(name: "publicView", view: Self.publicView)
+                        NamedView(name: "publicView", view: Self.publicView)
                     case 4:
-                        NamedPreview(name: "letView", view: Self.letView)
+                        NamedView(name: "letView", view: Self.letView)
                     case 5:
-                        NamedPreview(name: "nonViewProperty", view: Self.nonViewProperty)
+                        NamedView(name: "nonViewProperty", view: Self.nonViewProperty)
                     case 6:
-                        NamedPreview(name: "nonStaticView", view: Self.nonStaticView)
+                        NamedView(name: "nonStaticView", view: Self.nonStaticView)
                     default:
                         nil
                     }
@@ -172,54 +162,44 @@ final class AddPreviewsTests: XCTestCase {
                 var _14: some View { EmptyView() }
                 var _15: some View { EmptyView() }
 
-                struct NamedPreview {
-                    let name: String
-                    let view: any View
-
-                    init(name: String, view: any View) {
-                        self.name = name
-                        self.view = view
-                    }
-                }
-
                 private var iterator = 0
 
-                mutating func next() -> NamedPreview? {
+                mutating func next() -> NamedView? {
                     defer {
                         iterator += 1
                     }
 
                     return switch iterator {
                     case 0:
-                        NamedPreview(name: "_1", view: Self._1)
+                        NamedView(name: "_1", view: Self._1)
                     case 1:
-                        NamedPreview(name: "_2", view: Self._2)
+                        NamedView(name: "_2", view: Self._2)
                     case 2:
-                        NamedPreview(name: "_3", view: Self._3)
+                        NamedView(name: "_3", view: Self._3)
                     case 3:
-                        NamedPreview(name: "_4", view: Self._4)
+                        NamedView(name: "_4", view: Self._4)
                     case 4:
-                        NamedPreview(name: "_5", view: Self._5)
+                        NamedView(name: "_5", view: Self._5)
                     case 5:
-                        NamedPreview(name: "_6", view: Self._6)
+                        NamedView(name: "_6", view: Self._6)
                     case 6:
-                        NamedPreview(name: "_7", view: Self._7)
+                        NamedView(name: "_7", view: Self._7)
                     case 7:
-                        NamedPreview(name: "_8", view: Self._8)
+                        NamedView(name: "_8", view: Self._8)
                     case 8:
-                        NamedPreview(name: "_9", view: Self._9)
+                        NamedView(name: "_9", view: Self._9)
                     case 9:
-                        NamedPreview(name: "_10", view: Self._10)
+                        NamedView(name: "_10", view: Self._10)
                     case 10:
-                        NamedPreview(name: "_11", view: Self._11)
+                        NamedView(name: "_11", view: Self._11)
                     case 11:
-                        NamedPreview(name: "_12", view: Self._12)
+                        NamedView(name: "_12", view: Self._12)
                     case 12:
-                        NamedPreview(name: "_13", view: Self._13)
+                        NamedView(name: "_13", view: Self._13)
                     case 13:
-                        NamedPreview(name: "_14", view: Self._14)
+                        NamedView(name: "_14", view: Self._14)
                     case 14:
-                        NamedPreview(name: "_15", view: Self._15)
+                        NamedView(name: "_15", view: Self._15)
                     default:
                         nil
                     }
@@ -344,26 +324,16 @@ final class AddPreviewsTests: XCTestCase {
             struct MyView_Previews {
                 var myView: some View { EmptyView() }
 
-                struct NamedPreview {
-                    let name: String
-                    let view: any View
-
-                    init(name: String, view: any View) {
-                        self.name = name
-                        self.view = view
-                    }
-                }
-
                 private var iterator = 0
 
-                mutating func next() -> NamedPreview? {
+                mutating func next() -> NamedView? {
                     defer {
                         iterator += 1
                     }
 
                     return switch iterator {
                     case 0:
-                        NamedPreview(name: "myView", view: Self.myView)
+                        NamedView(name: "myView", view: Self.myView)
                     default:
                         nil
                     }
@@ -410,26 +380,16 @@ final class AddPreviewsTests: XCTestCase {
             struct MyView_Previews {
                 var myView: some View { EmptyView() }
 
-                struct NamedPreview {
-                    let name: String
-                    let view: any View
-
-                    init(name: String, view: any View) {
-                        self.name = name
-                        self.view = view
-                    }
-                }
-
                 private var iterator = 0
 
-                mutating func next() -> NamedPreview? {
+                mutating func next() -> NamedView? {
                     defer {
                         iterator += 1
                     }
 
                     return switch iterator {
                     case 0:
-                        NamedPreview(name: "myView", view: Self.myView)
+                        NamedView(name: "myView", view: Self.myView)
                     default:
                         nil
                     }
@@ -476,26 +436,16 @@ final class AddPreviewsTests: XCTestCase {
             struct MyView_Previews {
                 var myView: some View { EmptyView() }
 
-                struct NamedPreview {
-                    let name: String
-                    let view: any View
-
-                    init(name: String, view: any View) {
-                        self.name = name
-                        self.view = view
-                    }
-                }
-
                 private var iterator = 0
 
-                mutating func next() -> NamedPreview? {
+                mutating func next() -> NamedView? {
                     defer {
                         iterator += 1
                     }
 
                     return switch iterator {
                     case 0:
-                        NamedPreview(name: "myView", view: Self.myView)
+                        NamedView(name: "myView", view: Self.myView)
                     default:
                         nil
                     }

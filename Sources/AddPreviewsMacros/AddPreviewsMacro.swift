@@ -66,7 +66,6 @@ extension AddPreviews: MemberMacro {
         let rawMembers = rawMemberIdentifiers.map { "\($0).previewDisplayName(\"\($0)\")" }
 
         return [
-            namedPreviewTypeDeclaration,
             iteratorDeclaration,
             iteratorNextDeclaration(rawMemberIdentifiers: rawMemberIdentifiers),
             previewsDeclaration(statements: rawMembers),
@@ -82,7 +81,7 @@ extension AddPreviews: ExtensionMacro {
 
 private func iteratorNextDeclaration(rawMemberIdentifiers: [String]) -> DeclSyntax {
     var decl = """
-    mutating func next() -> NamedPreview? {
+    mutating func next() -> NamedView? {
     defer { iterator += 1 }
 
     return switch iterator {
@@ -91,7 +90,7 @@ private func iteratorNextDeclaration(rawMemberIdentifiers: [String]) -> DeclSynt
     for (count, identifier) in rawMemberIdentifiers.enumerated() {
         decl += """
         case \(count):
-            NamedPreview(name: \"\(identifier)\", view: Self.\(identifier))
+            NamedView(name: \"\(identifier)\", view: Self.\(identifier))
         """
     }
     decl += """
@@ -105,20 +104,6 @@ private func iteratorNextDeclaration(rawMemberIdentifiers: [String]) -> DeclSynt
 
 private var iteratorDeclaration: DeclSyntax {
     "private var iterator = 0"
-}
-
-private var namedPreviewTypeDeclaration: DeclSyntax {
-    """
-    struct NamedPreview {
-        let name: String
-        let view: any View
-
-        init(name: String, view: any View) {
-            self.name = name
-            self.view = view
-        }
-    }
-    """
 }
 
 private func previewsDeclaration(statements: [String]) -> DeclSyntax {
