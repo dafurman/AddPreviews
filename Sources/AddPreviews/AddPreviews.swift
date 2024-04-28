@@ -23,5 +23,7 @@
 ///     }
 /// }
 /// ```
-@attached(member, names: named(previews))
+@attached(member, names: named(previews), named(next), named(iterator))
 public macro AddPreviews() = #externalMacro(module: "AddPreviewsMacros", type: "AddPreviews")
+
+public typealias IterableSequence = Sequence & IteratorProtocol

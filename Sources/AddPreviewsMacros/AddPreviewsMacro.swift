@@ -6,7 +6,9 @@ import SwiftSyntaxMacros
 
 private let macroName = "AddPreviews"
 
-public struct AddPreviews: MemberMacro {
+public struct AddPreviews {}
+
+extension AddPreviews: MemberMacro {
     public static func expansion(
         of node: AttributeSyntax,
         providingMembersOf declaration: some DeclGroupSyntax,
@@ -63,8 +65,54 @@ public struct AddPreviews: MemberMacro {
 
         let rawMembers = rawMemberIdentifiers.map { "\($0).previewDisplayName(\"\($0)\")" }
 
-        return [previewsDeclaration(statements: rawMembers)]
+        return [
+            namedPreviewTypeDeclaration,
+            iteratorDeclaration,
+            iteratorNextDeclaration(rawMemberIdentifiers: rawMemberIdentifiers),
+            previewsDeclaration(statements: rawMembers),
+        ]
     }
+}
+
+private func iteratorNextDeclaration(rawMemberIdentifiers: [String]) -> DeclSyntax {
+    var decl = """
+    mutating func next() -> NamedPreview? {
+    defer { iterator += 1 }
+
+    return switch iterator {
+    """
+
+    for (count, identifier) in rawMemberIdentifiers.enumerated() {
+        decl += """
+        case \(count):
+            NamedPreview(name: \"\(identifier)\", view: Self.\(identifier))
+        """
+    }
+    decl += """
+    default:
+        nil
+    }
+    }
+    """
+    return DeclSyntax(stringLiteral: decl)
+}
+
+private var iteratorDeclaration: DeclSyntax {
+    "private var iterator = 0"
+}
+
+private var namedPreviewTypeDeclaration: DeclSyntax {
+    """
+    struct NamedPreview {
+        let name: String
+        let view: any View
+
+        init(name: String, view: any View) {
+            self.name = name
+            self.view = view
+        }
+    }
+    """
 }
 
 private func previewsDeclaration(statements: [String]) -> DeclSyntax {
@@ -98,7 +146,8 @@ private extension MemberBlockItemListSyntax.Element {
 private struct TooManyPreviewsError: Error, CustomStringConvertible {
     let count: Int
 
-    var description: String { """
+    var description: String { 
+        """
         Xcode currently only supports displaying 15 previews at once, and you have \(count).
 
         Some options are:
