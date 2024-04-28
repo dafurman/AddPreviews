@@ -26,5 +26,3 @@
 @attached(member, names: named(previews), named(next), named(iterator))
 @attached(extension, conformances: CustomDebugStringConvertible)
 public macro AddPreviews() = #externalMacro(module: "AddPreviewsMacros", type: "AddPreviews")
-
-public typealias IterableSequence = Sequence & IteratorProtocol
