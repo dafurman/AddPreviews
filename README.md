@@ -37,7 +37,7 @@ static var previews: some View {
 }
 ```
 
-### [Use in Snapshot Tests]
+### Use in Snapshot Tests
 
 The real magic comes in the boilerplate removal in [snapshot tests](https://github.com/pointfreeco/swift-snapshot-testing).
 
