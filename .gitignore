@@ -8,3 +8,5 @@ DerivedData/
 .netrc
 .vscode/launch.json
 default.profraw
+Examples/.swiftpm/xcode/package.xcworkspace/contents.xcworkspacedata
+Examples/.swiftpm/xcode/package.xcworkspace/xcshareddata/IDEWorkspaceChecks.plist
