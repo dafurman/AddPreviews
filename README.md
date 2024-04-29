@@ -108,9 +108,9 @@ struct RowView_Previews: PreviewProvider {
 ```
 Snapshot:
 ```swift
-final class SettingsRowViewTests: XCTestCase {
+final class RowViewTests: XCTestCase {
     func testPreviews() {
-        assertSnapshot(of: SettingsRowView_Previews.previews, as: .image(layout: .device(config: .yourDevice)))
+        assertSnapshot(of: RowView_Previews.previews, as: .image(layout: .device(config: .yourDevice)))
     }
 }
 ```
