@@ -1,0 +1,18 @@
+name: Test_Examples_SwiftPM
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+jobs:
+  build:
+    runs-on: macos-latest
+    steps:
+    - uses: actions/checkout@v4
+    - name: cd Examples
+      run: cd Examples/
+    - name: Build
+      run: swift build -v
+    - name: Run tests
+      run: |
+        swift test -Xswiftc -Xfrontend -Xswiftc -dump-macro-expansions --enable-code-coverage
