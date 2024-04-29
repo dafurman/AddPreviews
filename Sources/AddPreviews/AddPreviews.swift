@@ -24,5 +24,5 @@
 /// }
 /// ```
 @attached(member, names: named(previews), named(next), named(iterator))
-@attached(extension, conformances: CustomDebugStringConvertible)
+@attached(extension, conformances: IteratorProtocol, Sequence)
 public macro AddPreviews() = #externalMacro(module: "AddPreviewsMacros", type: "AddPreviews")
