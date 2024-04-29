@@ -37,7 +37,7 @@ static var previews: some View {
 }
 ```
 
-### Use in Snapshot Tests
+### [Use in Snapshot Tests]
 
 The real magic comes in the boilerplate removal in [snapshot tests](https://github.com/pointfreeco/swift-snapshot-testing).
 
@@ -79,23 +79,9 @@ All you have to do is rerecord snapshots when making an addition or change, or r
 
 ### Why create specific view properties? Why not just inline different states in the preview property itself?
 
-This pattern makes writing [snapshot tests](https://github.com/pointfreeco/swift-snapshot-testing) a breeze!
+This pattern makes writing [snapshot tests](https://github.com/pointfreeco/swift-snapshot-testing) for device-sized views a breeze, as [shown above](#use-in-snapshot-tests)!
 
-If you've got dedicated view properties for each state you want to snapshot, your tests become as simple as this:
-
-```swift
-final class MyViewTests: XCTestCase {
-    func testStateOne() {
-        assertSnapshot(of: MyView_Previews.stateOne, as: .image(layout: .device(config: .yourDevice)))
-    }
-    
-    func testStateTwo() {
-        assertSnapshot(of: MyView_Previews.stateTwo, as: .image(layout: .device(config: .yourDevice)))
-    }
-}
-```
-
-That said, this pattern is best-tailored for screen-sized views that should have their own reference images. For smaller views, this approach is overkill, and a preview comprising of multiple states could just be simply written and snapshotted directly, as shown below:
+That said, this pattern is best-tailored for screen-sized views that should have their own reference images. For smaller views, this approach is overkill, and a preview comprising of multiple states in a stack could just be simply written and snapshotted directly, as shown below:
 
 Preview:
 ```swift
