@@ -1,5 +1,10 @@
 # AddPreviews
 
+![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/Dafurman/AddPreviews/Test_SwiftPM.yml?label=CI&logo=GitHub)
+[![codecov](https://codecov.io/gh/dafurman/AddPreviews/graph/badge.svg?token=SLS5308CEO)](https://codecov.io/gh/dafurman/AddPreviews)
+[![](https://img.shields.io/endpoint?url=https%3A%2F%2Fswiftpackageindex.com%2Fapi%2Fpackages%2Fdafurman%2FAddPreviews%2Fbadge%3Ftype%3Dswift-versions)](https://swiftpackageindex.com/dafurman/AddPreviews)
+[![](https://img.shields.io/endpoint?url=https%3A%2F%2Fswiftpackageindex.com%2Fapi%2Fpackages%2Fdafurman%2FAddPreviews%2Fbadge%3Ftype%3Dplatforms)](https://swiftpackageindex.com/dafurman/AddPreviews)
+
 `@AddPreviews` makes preview-based [snapshot tests](https://github.com/pointfreeco/swift-snapshot-testing) easier.
 
 When applied to a preview provider it...
