@@ -9,7 +9,7 @@ import AddPreviewsMacros
 final class AddPreviewsTests: XCTestCase {
     override func invokeTest() {
         withMacroTesting(
-            isRecording: false,
+//            isRecording: true,
             macros: ["AddPreviews": AddPreviews.self]
         ) {
             super.invokeTest()
@@ -53,6 +53,33 @@ final class AddPreviewsTests: XCTestCase {
                 static private var privateNonViewProperty: Int { 0 }
                 var nonStaticView: some View { EmptyView() }
 
+                private var iterator = 0
+
+                mutating func next() -> NamedView? {
+                    defer {
+                        iterator += 1
+                    }
+
+                    return switch iterator {
+                    case 0:
+                        NamedView(name: "fileprivateView", view: Self.fileprivateView)
+                    case 1:
+                        NamedView(name: "internalView", view: Self.internalView)
+                    case 2:
+                        NamedView(name: "explicitlyInternalView", view: Self.explicitlyInternalView)
+                    case 3:
+                        NamedView(name: "publicView", view: Self.publicView)
+                    case 4:
+                        NamedView(name: "letView", view: Self.letView)
+                    case 5:
+                        NamedView(name: "nonViewProperty", view: Self.nonViewProperty)
+                    case 6:
+                        NamedView(name: "nonStaticView", view: Self.nonStaticView)
+                    default:
+                        nil
+                    }
+                }
+
                 static var previews: some View {
                     fileprivateView.previewDisplayName("fileprivateView")
                     internalView.previewDisplayName("internalView")
@@ -62,6 +89,9 @@ final class AddPreviewsTests: XCTestCase {
                     nonViewProperty.previewDisplayName("nonViewProperty")
                     nonStaticView.previewDisplayName("nonStaticView")
                 }
+            }
+
+            extension MyView_Previews: Sequence & IteratorProtocol {
             }
             """
         }
@@ -83,6 +113,9 @@ final class AddPreviewsTests: XCTestCase {
                 static var previews: some View {
                     EmptyView()
                 }
+            }
+
+            extension MyView_Previews: Sequence & IteratorProtocol {
             }
             """
         }
@@ -129,6 +162,49 @@ final class AddPreviewsTests: XCTestCase {
                 var _14: some View { EmptyView() }
                 var _15: some View { EmptyView() }
 
+                private var iterator = 0
+
+                mutating func next() -> NamedView? {
+                    defer {
+                        iterator += 1
+                    }
+
+                    return switch iterator {
+                    case 0:
+                        NamedView(name: "_1", view: Self._1)
+                    case 1:
+                        NamedView(name: "_2", view: Self._2)
+                    case 2:
+                        NamedView(name: "_3", view: Self._3)
+                    case 3:
+                        NamedView(name: "_4", view: Self._4)
+                    case 4:
+                        NamedView(name: "_5", view: Self._5)
+                    case 5:
+                        NamedView(name: "_6", view: Self._6)
+                    case 6:
+                        NamedView(name: "_7", view: Self._7)
+                    case 7:
+                        NamedView(name: "_8", view: Self._8)
+                    case 8:
+                        NamedView(name: "_9", view: Self._9)
+                    case 9:
+                        NamedView(name: "_10", view: Self._10)
+                    case 10:
+                        NamedView(name: "_11", view: Self._11)
+                    case 11:
+                        NamedView(name: "_12", view: Self._12)
+                    case 12:
+                        NamedView(name: "_13", view: Self._13)
+                    case 13:
+                        NamedView(name: "_14", view: Self._14)
+                    case 14:
+                        NamedView(name: "_15", view: Self._15)
+                    default:
+                        nil
+                    }
+                }
+
                 static var previews: some View {
                     _1.previewDisplayName("_1")
                     _2.previewDisplayName("_2")
@@ -146,6 +222,9 @@ final class AddPreviewsTests: XCTestCase {
                     _14.previewDisplayName("_14")
                     _15.previewDisplayName("_15")
                 }
+            }
+
+            extension MyView_Previews: Sequence & IteratorProtocol {
             }
             """
         }
@@ -245,9 +324,27 @@ final class AddPreviewsTests: XCTestCase {
             struct MyView_Previews {
                 var myView: some View { EmptyView() }
 
+                private var iterator = 0
+
+                mutating func next() -> NamedView? {
+                    defer {
+                        iterator += 1
+                    }
+
+                    return switch iterator {
+                    case 0:
+                        NamedView(name: "myView", view: Self.myView)
+                    default:
+                        nil
+                    }
+                }
+
                 static var previews: some View {
                     myView.previewDisplayName("myView")
                 }
+            }
+
+            extension MyView_Previews: Sequence & IteratorProtocol {
             }
             """
         }
@@ -283,9 +380,27 @@ final class AddPreviewsTests: XCTestCase {
             struct MyView_Previews {
                 var myView: some View { EmptyView() }
 
+                private var iterator = 0
+
+                mutating func next() -> NamedView? {
+                    defer {
+                        iterator += 1
+                    }
+
+                    return switch iterator {
+                    case 0:
+                        NamedView(name: "myView", view: Self.myView)
+                    default:
+                        nil
+                    }
+                }
+
                 static var previews: some View {
                     myView.previewDisplayName("myView")
                 }
+            }
+
+            extension MyView_Previews: Sequence & IteratorProtocol {
             }
             """
         }
@@ -321,9 +436,27 @@ final class AddPreviewsTests: XCTestCase {
             struct MyView_Previews {
                 var myView: some View { EmptyView() }
 
+                private var iterator = 0
+
+                mutating func next() -> NamedView? {
+                    defer {
+                        iterator += 1
+                    }
+
+                    return switch iterator {
+                    case 0:
+                        NamedView(name: "myView", view: Self.myView)
+                    default:
+                        nil
+                    }
+                }
+
                 static var previews: some View {
                     myView.previewDisplayName("myView")
                 }
+            }
+
+            extension MyView_Previews: Sequence & IteratorProtocol {
             }
             """
         }
