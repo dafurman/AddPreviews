@@ -1,8 +1,14 @@
 # AddPreviews
 
-A simple macro that automates the process of creating previews in your `PreviewProvider`s, by deriving its contents from static view properties within the struct.
+`@AddPreviews` makes preview-based [snapshot tests](https://github.com/pointfreeco/swift-snapshot-testing) easier.
+
+When applied to a preview provider it...
+1. Automatically creates a `preview` by deriving the view's contents from static view properties within the struct.
+2. Makes the preview provider iterable through its view properties, facilitating snapshot coverage of each preview state.
 
 ## Usage
+
+### Use in Previews
 
 Just `import AddPreviews` and attach `@AddPreviews` to your preview struct.
 
@@ -13,21 +19,61 @@ import AddPreviews
 struct MyView_Previews: PreviewProvider {
     static var stateOne: some View { MyView(state: .one) }
     static var stateTwo: some View { MyView(state: .two) }
+}
+```
 
-    // (Generated)
-    static var previews: some View {
-        stateOne.previewDisplayName("stateOne")
-        stateTwo.previewDisplayName("stateTwo")
+This will generate a `previews` property containing each of your view states, along with display names to easily identify which one you're looking at in Xcode:
+
+```swift
+// (Generated)
+static var previews: some View {
+    stateOne.previewDisplayName("stateOne")
+    stateTwo.previewDisplayName("stateTwo")
+}
+```
+
+### Use in Snapshot Tests
+
+The real magic comes in the boilerplate removal in [snapshot tests](https://github.com/pointfreeco/swift-snapshot-testing).
+
+`@AddPreviews` makes an annotated preview provider iterable over each of its view properties, allowing a snapshot test to be reduced from this:
+
+```swift
+import SnapshotTesting
+import XCTest
+
+final class MyViewTests: XCTestCase {
+    func testStateOne() {
+        assertSnapshot(of: MyView_Previews.stateOne, as: .image(layout: .device(config: .yourDevice)))
+    }
+    
+    func testStateTwo() {
+        assertSnapshot(of: MyView_Previews.stateTwo, as: .image(layout: .device(config: .yourDevice)))
     }
 }
 ```
 
+To this - code that effortlessly scales with the addition of new preview states:
+
+```swift
+import SnapshotTesting
+import XCTest
+
+final class MyViewTests: XCTestCase {
+    func testPreviews() {
+        for preview in MyView_Previews() {
+            assertSnapshot(of: preview, as: .image(layout: .device(config: .yourDevice)), named: preview.name)
+        }
+    }
+}
+```
+
+All you have to do is rerecord snapshots when making an addition or change, or remove unused reference images when removing a preview state.
+
 ## Motivation
 
-It's easy to add a preview state then forget to put it into your previews, and it's no fun to manually write out `previewDisplayName` on every state. 
-This macro eliminates both of these pieces of boilerplate.
+### Why create specific view properties? Why not just inline different states in the preview property itself?
 
-### Why create specific view properties?
 This pattern makes writing [snapshot tests](https://github.com/pointfreeco/swift-snapshot-testing) a breeze!
 
 If you've got dedicated view properties for each state you want to snapshot, your tests become as simple as this:
@@ -44,8 +90,33 @@ final class MyViewTests: XCTestCase {
 }
 ```
 
-### What about the `#Preview` macro?
-[#Preview](https://developer.apple.com/documentation/swiftui/preview(_:body:)) is nice and concise, but it doesn't support snapshot testing in the way that `PreviewProvider` does, as shown above.
+That said, this pattern is best-tailored for screen-sized views that should have their own reference images. For smaller views, this approach is overkill, and a preview comprising of multiple states could just be simply written and snapshotted directly, as shown below:
+
+Preview:
+```swift
+struct RowView_Previews: PreviewProvider {
+    static var previews: some View {
+        VStack {
+            RowView(title: "Title")
+            RowView(title: "Title", subtitle: "Subtitle")
+            RowView(title: "Title", subtitle: "Subtitle") {
+                Image(systemSymbol: .envelopeFill)
+            }
+        }
+    }
+}
+```
+Snapshot:
+```swift
+final class SettingsRowViewTests: XCTestCase {
+    func testPreviews() {
+        assertSnapshot(of: SettingsRowView_Previews.previews, as: .image(layout: .device(config: .yourDevice)))
+    }
+}
+```
+
+## What about the `#Preview` macro?
+[#Preview](https://developer.apple.com/documentation/swiftui/preview(_:body:)) is nice, concise, and is positioned as the future of Xcode previews, but it doesn't support snapshot testing in the way that `PreviewProvider` does, as shown above.
 
 Using `#Preview` generates a struct with a mangled type name like this:
 `$s17<YourTarget>33_5594AE1E7369B73F633885FC4E970BA7Ll7PreviewfMf_15PreviewRegistryfMu_`
