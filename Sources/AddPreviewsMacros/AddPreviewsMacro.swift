@@ -138,12 +138,6 @@ private extension MemberBlockItemListSyntax.Element {
         } == true
     }
 
-    var variableIdentifier: String? {
-        decl.as(VariableDeclSyntax.self)?
-            .bindings.first { $0.is(PatternBindingSyntax.self) }?
-            .pattern.as(IdentifierPatternSyntax.self)?.identifier.trimmedDescription
-    }
-
     var property: ViewProperty? {
         guard let firstPatternBinding = decl.as(VariableDeclSyntax.self)?
             .bindings.first(where: { $0.is(PatternBindingSyntax.self) }),
