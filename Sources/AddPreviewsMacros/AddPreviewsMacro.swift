@@ -88,7 +88,7 @@ extension AddPreviews: ExtensionMacro {
 
 private func iteratorNextDeclaration(viewProperties: [ViewProperty]) -> DeclSyntax {
     var decl = """
-    mutating func next() -> NamedView? {
+    mutating func next() -> (any NamedView)? {
     defer { iterator += 1 }
 
     return switch iterator {

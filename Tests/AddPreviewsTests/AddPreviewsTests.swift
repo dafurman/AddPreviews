@@ -55,7 +55,7 @@ final class AddPreviewsTests: XCTestCase {
 
                 private var iterator = 0
 
-                mutating func next() -> NamedView? {
+                mutating func next() -> (any NamedView)? {
                     defer {
                         iterator += 1
                     }
@@ -116,7 +116,7 @@ final class AddPreviewsTests: XCTestCase {
 
                 private var iterator = 0
 
-                mutating func next() -> NamedView? {
+                mutating func next() -> (any NamedView)? {
                     defer {
                         iterator += 1
                     }
@@ -213,7 +213,7 @@ final class AddPreviewsTests: XCTestCase {
 
                 private var iterator = 0
 
-                mutating func next() -> NamedView? {
+                mutating func next() -> (any NamedView)? {
                     defer {
                         iterator += 1
                     }
@@ -375,7 +375,7 @@ final class AddPreviewsTests: XCTestCase {
 
                 private var iterator = 0
 
-                mutating func next() -> NamedView? {
+                mutating func next() -> (any NamedView)? {
                     defer {
                         iterator += 1
                     }
@@ -431,7 +431,7 @@ final class AddPreviewsTests: XCTestCase {
 
                 private var iterator = 0
 
-                mutating func next() -> NamedView? {
+                mutating func next() -> (any NamedView)? {
                     defer {
                         iterator += 1
                     }
@@ -487,7 +487,7 @@ final class AddPreviewsTests: XCTestCase {
 
                 private var iterator = 0
 
-                mutating func next() -> NamedView? {
+                mutating func next() -> (any NamedView)? {
                     defer {
                         iterator += 1
                     }

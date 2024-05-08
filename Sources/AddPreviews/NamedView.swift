@@ -11,7 +11,7 @@ extension NamedView {
     public var body: some View { AnyView(view) }
 }
 
-public struct _ConcreteNamedView {
+public struct _ConcreteNamedView: NamedView {
     public let name: String
     public let view: any View
 
