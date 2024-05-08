@@ -6,6 +6,11 @@ import SwiftSyntaxMacros
 
 private let macroName = "AddPreviews"
 
+private struct ViewProperty {
+    let isGenericView: Bool
+    let identifier: String
+}
+
 public struct AddPreviews {}
 
 extension AddPreviews: MemberMacro {
@@ -51,23 +56,25 @@ extension AddPreviews: MemberMacro {
             throw InvalidDeclaration.DeclarationError()
         }
 
-        let rawMemberIdentifiers = declaration.memberBlock.members
+        let viewProperties = declaration.memberBlock.members
             .filter { !$0.isPrivateVariable }
-            .compactMap { $0.variableIdentifier }
-        guard !rawMemberIdentifiers.isEmpty else {
+            .compactMap { $0.property }
+        guard !viewProperties.isEmpty else {
             return [previewsDeclaration(statements: ["EmptyView()"])]
         }
 
-        let rawMembersIdentifiersCount = rawMemberIdentifiers.count
-        guard rawMembersIdentifiersCount <= 15 else {
-            throw TooManyPreviewsError(count: rawMembersIdentifiersCount)
+        let viewIdentifiers = viewProperties.map(\.identifier)
+        let viewPropertiesCount = viewProperties.count
+        guard viewPropertiesCount <= 15 else {
+            throw TooManyPreviewsError(count: viewPropertiesCount)
         }
 
-        let rawMembers = rawMemberIdentifiers.map { "\($0).previewDisplayName(\"\($0)\")" }
+        let rawMembers = viewIdentifiers
+            .map { "\($0).previewDisplayName(\"\($0)\")" }
 
         return [
             iteratorDeclaration,
-            iteratorNextDeclaration(rawMemberIdentifiers: rawMemberIdentifiers),
+            iteratorNextDeclaration(viewProperties: viewProperties),
             previewsDeclaration(statements: rawMembers),
         ]
     }
@@ -79,7 +86,7 @@ extension AddPreviews: ExtensionMacro {
     }
 }
 
-private func iteratorNextDeclaration(rawMemberIdentifiers: [String]) -> DeclSyntax {
+private func iteratorNextDeclaration(viewProperties: [ViewProperty]) -> DeclSyntax {
     var decl = """
     mutating func next() -> NamedView? {
     defer { iterator += 1 }
@@ -87,11 +94,16 @@ private func iteratorNextDeclaration(rawMemberIdentifiers: [String]) -> DeclSynt
     return switch iterator {
     """
 
-    for (count, identifier) in rawMemberIdentifiers.enumerated() {
-        decl += """
-        case \(count):
-            NamedView(name: \"\(identifier)\", view: Self.\(identifier))
-        """
+    for (count, viewProperty) in viewProperties.enumerated() {
+        decl += "case \(count):\n"
+
+        if viewProperty.isGenericView {
+            let identifier = viewProperty.identifier
+            decl += "\tNamedView(name: \"\(identifier)\", view: Self.\(identifier))"
+        } else {
+            decl += "Self.\(viewProperty.identifier)"
+        }
+        decl += "\n"
     }
     decl += """
     default:
@@ -129,8 +141,31 @@ private extension MemberBlockItemListSyntax.Element {
     var variableIdentifier: String? {
         decl.as(VariableDeclSyntax.self)?
             .bindings.first { $0.is(PatternBindingSyntax.self) }?
-            .pattern.as(IdentifierPatternSyntax.self)?
-            .identifier.trimmedDescription
+            .pattern.as(IdentifierPatternSyntax.self)?.identifier.trimmedDescription
+    }
+
+    var property: ViewProperty? {
+        guard let firstPatternBinding = decl.as(VariableDeclSyntax.self)?
+            .bindings.first(where: { $0.is(PatternBindingSyntax.self) }),
+              let variableIdentifier = firstPatternBinding.pattern.as(IdentifierPatternSyntax.self)?.identifier.trimmedDescription
+        else {
+            return nil
+        }
+
+        let isGenericView = firstPatternBinding.typeAnnotation?.isGenericView ?? false
+        return ViewProperty(isGenericView: isGenericView, identifier: variableIdentifier)
+    }
+}
+
+private extension TypeAnnotationSyntax {
+    var isGenericView: Bool {
+        guard let someOrAnyTypeSyntax = type.as(SomeOrAnyTypeSyntax.self),
+              let name = someOrAnyTypeSyntax.constraint.as(IdentifierTypeSyntax.self)?.name,
+              case let .identifier(text) = name.tokenKind 
+        else {
+            return false
+        }
+        return text == "View"
     }
 }
 
