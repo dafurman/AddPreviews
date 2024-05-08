@@ -2,7 +2,7 @@
 
 import SwiftUI
 
-public struct NamedView: SnapshottableView {
+public struct NamedView {
     public let name: String
     public let view: any View
 
