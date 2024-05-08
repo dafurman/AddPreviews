@@ -99,7 +99,7 @@ private func iteratorNextDeclaration(viewProperties: [ViewProperty]) -> DeclSynt
 
         if viewProperty.isGenericView {
             let identifier = viewProperty.identifier
-            decl += "\tNamedView(name: \"\(identifier)\", view: Self.\(identifier))"
+            decl += "\t_ConcreteNamedView(name: \"\(identifier)\", view: Self.\(identifier))"
         } else {
             decl += "Self.\(viewProperty.identifier)"
         }

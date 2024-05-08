@@ -62,19 +62,19 @@ final class AddPreviewsTests: XCTestCase {
 
                     return switch iterator {
                     case 0:
-                    	NamedView(name: "fileprivateView", view: Self.fileprivateView)
+                    	_ConcreteNamedView(name: "fileprivateView", view: Self.fileprivateView)
                     case 1:
-                    	NamedView(name: "internalView", view: Self.internalView)
+                    	_ConcreteNamedView(name: "internalView", view: Self.internalView)
                     case 2:
-                    	NamedView(name: "explicitlyInternalView", view: Self.explicitlyInternalView)
+                    	_ConcreteNamedView(name: "explicitlyInternalView", view: Self.explicitlyInternalView)
                     case 3:
-                    	NamedView(name: "publicView", view: Self.publicView)
+                    	_ConcreteNamedView(name: "publicView", view: Self.publicView)
                     case 4:
                         Self.letView
                     case 5:
                         Self.nonViewProperty
                     case 6:
-                    	NamedView(name: "nonStaticView", view: Self.nonStaticView)
+                    	_ConcreteNamedView(name: "nonStaticView", view: Self.nonStaticView)
                     default:
                         nil
                     }
@@ -125,9 +125,9 @@ final class AddPreviewsTests: XCTestCase {
                     case 0:
                         Self.view
                     case 1:
-                    	NamedView(name: "someView", view: Self.someView)
+                    	_ConcreteNamedView(name: "someView", view: Self.someView)
                     case 2:
-                    	NamedView(name: "anyView", view: Self.anyView)
+                    	_ConcreteNamedView(name: "anyView", view: Self.anyView)
                     default:
                         nil
                     }
@@ -220,35 +220,35 @@ final class AddPreviewsTests: XCTestCase {
 
                     return switch iterator {
                     case 0:
-                    	NamedView(name: "_1", view: Self._1)
+                    	_ConcreteNamedView(name: "_1", view: Self._1)
                     case 1:
-                    	NamedView(name: "_2", view: Self._2)
+                    	_ConcreteNamedView(name: "_2", view: Self._2)
                     case 2:
-                    	NamedView(name: "_3", view: Self._3)
+                    	_ConcreteNamedView(name: "_3", view: Self._3)
                     case 3:
-                    	NamedView(name: "_4", view: Self._4)
+                    	_ConcreteNamedView(name: "_4", view: Self._4)
                     case 4:
-                    	NamedView(name: "_5", view: Self._5)
+                    	_ConcreteNamedView(name: "_5", view: Self._5)
                     case 5:
-                    	NamedView(name: "_6", view: Self._6)
+                    	_ConcreteNamedView(name: "_6", view: Self._6)
                     case 6:
-                    	NamedView(name: "_7", view: Self._7)
+                    	_ConcreteNamedView(name: "_7", view: Self._7)
                     case 7:
-                    	NamedView(name: "_8", view: Self._8)
+                    	_ConcreteNamedView(name: "_8", view: Self._8)
                     case 8:
-                    	NamedView(name: "_9", view: Self._9)
+                    	_ConcreteNamedView(name: "_9", view: Self._9)
                     case 9:
-                    	NamedView(name: "_10", view: Self._10)
+                    	_ConcreteNamedView(name: "_10", view: Self._10)
                     case 10:
-                    	NamedView(name: "_11", view: Self._11)
+                    	_ConcreteNamedView(name: "_11", view: Self._11)
                     case 11:
-                    	NamedView(name: "_12", view: Self._12)
+                    	_ConcreteNamedView(name: "_12", view: Self._12)
                     case 12:
-                    	NamedView(name: "_13", view: Self._13)
+                    	_ConcreteNamedView(name: "_13", view: Self._13)
                     case 13:
-                    	NamedView(name: "_14", view: Self._14)
+                    	_ConcreteNamedView(name: "_14", view: Self._14)
                     case 14:
-                    	NamedView(name: "_15", view: Self._15)
+                    	_ConcreteNamedView(name: "_15", view: Self._15)
                     default:
                         nil
                     }
@@ -382,7 +382,7 @@ final class AddPreviewsTests: XCTestCase {
 
                     return switch iterator {
                     case 0:
-                    	NamedView(name: "myView", view: Self.myView)
+                    	_ConcreteNamedView(name: "myView", view: Self.myView)
                     default:
                         nil
                     }
@@ -438,7 +438,7 @@ final class AddPreviewsTests: XCTestCase {
 
                     return switch iterator {
                     case 0:
-                    	NamedView(name: "myView", view: Self.myView)
+                    	_ConcreteNamedView(name: "myView", view: Self.myView)
                     default:
                         nil
                     }
@@ -494,7 +494,7 @@ final class AddPreviewsTests: XCTestCase {
 
                     return switch iterator {
                     case 0:
-                    	NamedView(name: "myView", view: Self.myView)
+                    	_ConcreteNamedView(name: "myView", view: Self.myView)
                     default:
                         nil
                     }

@@ -2,7 +2,12 @@
 
 import SwiftUI
 
-public struct NamedView {
+public protocol NamedView {
+    var name: String { get }
+    var view: any View { get }
+}
+
+public struct _ConcreteNamedView {
     public let name: String
     public let view: any View
 
