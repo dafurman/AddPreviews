@@ -6,11 +6,6 @@ import SwiftSyntaxMacros
 
 private let macroName = "AddPreviews"
 
-private struct ViewProperty {
-    let isGenericView: Bool
-    let identifier: String
-}
-
 public struct AddPreviews {}
 
 extension AddPreviews: MemberMacro {
@@ -56,15 +51,14 @@ extension AddPreviews: MemberMacro {
             throw InvalidDeclaration.DeclarationError()
         }
 
-        let viewProperties = declaration.memberBlock.members
+        let viewIdentifiers = declaration.memberBlock.members
             .filter { !$0.isPrivateVariable }
-            .compactMap { $0.property }
-        guard !viewProperties.isEmpty else {
+            .compactMap { $0.propertyIdentifier }
+        guard !viewIdentifiers.isEmpty else {
             return [previewsDeclaration(statements: ["EmptyView()"])]
         }
 
-        let viewIdentifiers = viewProperties.map(\.identifier)
-        let viewPropertiesCount = viewProperties.count
+        let viewPropertiesCount = viewIdentifiers.count
         guard viewPropertiesCount <= 15 else {
             throw TooManyPreviewsError(count: viewPropertiesCount)
         }
@@ -73,8 +67,9 @@ extension AddPreviews: MemberMacro {
             .map { "\($0).previewDisplayName(\"\($0)\")" }
 
         return [
+            enumDeclaration(viewIdentifiers: viewIdentifiers),
             iteratorDeclaration,
-            iteratorNextDeclaration(viewProperties: viewProperties),
+            iteratorNextDeclaration(viewIdentifiers: viewIdentifiers),
             previewsDeclaration(statements: rawMembers),
         ]
     }
@@ -86,24 +81,20 @@ extension AddPreviews: ExtensionMacro {
     }
 }
 
-private func iteratorNextDeclaration(viewProperties: [ViewProperty]) -> DeclSyntax {
+private func iteratorNextDeclaration(viewIdentifiers: [String]) -> DeclSyntax {
     var decl = """
-    mutating func next() -> (any NamedView)? {
+    mutating func next() -> NamedView<ViewCase>? {
     defer { iterator += 1 }
 
     return switch iterator {
     """
 
-    for (count, viewProperty) in viewProperties.enumerated() {
-        decl += "case \(count):\n"
+    for (count, identifier) in viewIdentifiers.enumerated() {
+        decl += """
+        case \(count):
+            NamedView<ViewCase>(case: .\(identifier), view: Self.\(identifier))
 
-        if viewProperty.isGenericView {
-            let identifier = viewProperty.identifier
-            decl += "\t_ConcreteNamedView(name: \"\(identifier)\", view: Self.\(identifier))"
-        } else {
-            decl += "Self.\(viewProperty.identifier)"
-        }
-        decl += "\n"
+        """
     }
     decl += """
     default:
@@ -127,39 +118,31 @@ private func previewsDeclaration(statements: [String]) -> DeclSyntax {
     return DeclSyntax(stringLiteral: string)
 }
 
+private func enumDeclaration(viewIdentifiers: [String]) -> DeclSyntax {
+    var string = "enum ViewCase: String, NamedViewCase {"
+    string += viewIdentifiers
+        .map { "case \($0)" }
+        .joined(separator: "\n")
+    string += "}"
+    return DeclSyntax(stringLiteral: string)
+}
+
 private extension MemberBlockItemListSyntax.Element {
     var isPrivateVariable: Bool {
         decl.as(VariableDeclSyntax.self)?.modifiers.contains {
-            if case .keyword(.private) = $0.as(DeclModifierSyntax.self)?.name.tokenKind {
-                true
-            } else {
-                false
-            }
+            $0.as(DeclModifierSyntax.self)?.name.tokenKind == .keyword(.private)
         } == true
     }
 
-    var property: ViewProperty? {
+    var propertyIdentifier: String? {
         guard let firstPatternBinding = decl.as(VariableDeclSyntax.self)?
             .bindings.first(where: { $0.is(PatternBindingSyntax.self) }),
-              let variableIdentifier = firstPatternBinding.pattern.as(IdentifierPatternSyntax.self)?.identifier.trimmedDescription
+              let propertyIdentifier = firstPatternBinding.pattern.as(IdentifierPatternSyntax.self)?.identifier.trimmedDescription
         else {
             return nil
         }
 
-        let isGenericView = firstPatternBinding.typeAnnotation?.isGenericView ?? false
-        return ViewProperty(isGenericView: isGenericView, identifier: variableIdentifier)
-    }
-}
-
-private extension TypeAnnotationSyntax {
-    var isGenericView: Bool {
-        guard let someOrAnyTypeSyntax = type.as(SomeOrAnyTypeSyntax.self),
-              let name = someOrAnyTypeSyntax.constraint.as(IdentifierTypeSyntax.self)?.name,
-              case let .identifier(text) = name.tokenKind 
-        else {
-            return false
-        }
-        return text == "View"
+        return propertyIdentifier
     }
 }
 
