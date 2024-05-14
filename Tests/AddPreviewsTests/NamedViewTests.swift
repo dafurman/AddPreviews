@@ -10,20 +10,15 @@ final class NamedViewTests: XCTestCase {
         case two
     }
 
-    func testInitializer() {
-        XCTAssertNotNil(NamedView<ViewCase>(name: ViewCase.one.rawValue, view: EmptyView()))
-        XCTAssertNil(NamedView<ViewCase>(name: "not an enum case", view: EmptyView()))
-    }
-
     func testViewCasting() {
         var someView: some View { Text("") }
-        XCTAssertTrue(NamedView<ViewCase>(name: ViewCase.one.rawValue, view: Text(""))?.view is Text)
-        XCTAssertTrue(NamedView<ViewCase>(name: ViewCase.one.rawValue, view: someView)?.view is Text)
-        XCTAssertTrue(NamedView<ViewCase>(name: ViewCase.one.rawValue, view: AnyView(someView))?.view is AnyView)
+        XCTAssertTrue(NamedView<ViewCase>(case: .one, view: Text("")).view is Text)
+        XCTAssertTrue(NamedView<ViewCase>(case: .one, view: someView).view is Text)
+        XCTAssertTrue(NamedView<ViewCase>(case: .one, view: AnyView(someView)).view is AnyView)
     }
 
     func testCaseSwitching() {
-        XCTAssertEqual(NamedView<ViewCase>(name: ViewCase.one.rawValue, view: EmptyView())?.case, .one)
-        XCTAssertEqual(NamedView<ViewCase>(name: ViewCase.two.rawValue, view: EmptyView())?.case, .two)
+        XCTAssertEqual(NamedView<ViewCase>(case: .one, view: EmptyView()).case, .one)
+        XCTAssertEqual(NamedView<ViewCase>(case: .two, view: EmptyView()).case, .two)
     }
 }

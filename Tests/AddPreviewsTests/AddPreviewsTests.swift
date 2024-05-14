@@ -72,19 +72,19 @@ final class AddPreviewsTests: XCTestCase {
 
                     return switch iterator {
                     case 0:
-                        NamedView<ViewCase>(name: "fileprivateView", view: Self.fileprivateView)!
+                        NamedView<ViewCase>(case: .fileprivateView, view: Self.fileprivateView)
                     case 1:
-                        NamedView<ViewCase>(name: "internalView", view: Self.internalView)!
+                        NamedView<ViewCase>(case: .internalView, view: Self.internalView)
                     case 2:
-                        NamedView<ViewCase>(name: "explicitlyInternalView", view: Self.explicitlyInternalView)!
+                        NamedView<ViewCase>(case: .explicitlyInternalView, view: Self.explicitlyInternalView)
                     case 3:
-                        NamedView<ViewCase>(name: "publicView", view: Self.publicView)!
+                        NamedView<ViewCase>(case: .publicView, view: Self.publicView)
                     case 4:
-                        NamedView<ViewCase>(name: "letView", view: Self.letView)!
+                        NamedView<ViewCase>(case: .letView, view: Self.letView)
                     case 5:
-                        NamedView<ViewCase>(name: "nonViewProperty", view: Self.nonViewProperty)!
+                        NamedView<ViewCase>(case: .nonViewProperty, view: Self.nonViewProperty)
                     case 6:
-                        NamedView<ViewCase>(name: "nonStaticView", view: Self.nonStaticView)!
+                        NamedView<ViewCase>(case: .nonStaticView, view: Self.nonStaticView)
                     default:
                         nil
                     }
@@ -139,11 +139,11 @@ final class AddPreviewsTests: XCTestCase {
 
                     return switch iterator {
                     case 0:
-                        NamedView<ViewCase>(name: "view", view: Self.view)!
+                        NamedView<ViewCase>(case: .view, view: Self.view)
                     case 1:
-                        NamedView<ViewCase>(name: "someView", view: Self.someView)!
+                        NamedView<ViewCase>(case: .someView, view: Self.someView)
                     case 2:
-                        NamedView<ViewCase>(name: "anyView", view: Self.anyView)!
+                        NamedView<ViewCase>(case: .anyView, view: Self.anyView)
                     default:
                         nil
                     }
@@ -254,35 +254,35 @@ final class AddPreviewsTests: XCTestCase {
 
                     return switch iterator {
                     case 0:
-                        NamedView<ViewCase>(name: "_1", view: Self._1)!
+                        NamedView<ViewCase>(case: ._1, view: Self._1)
                     case 1:
-                        NamedView<ViewCase>(name: "_2", view: Self._2)!
+                        NamedView<ViewCase>(case: ._2, view: Self._2)
                     case 2:
-                        NamedView<ViewCase>(name: "_3", view: Self._3)!
+                        NamedView<ViewCase>(case: ._3, view: Self._3)
                     case 3:
-                        NamedView<ViewCase>(name: "_4", view: Self._4)!
+                        NamedView<ViewCase>(case: ._4, view: Self._4)
                     case 4:
-                        NamedView<ViewCase>(name: "_5", view: Self._5)!
+                        NamedView<ViewCase>(case: ._5, view: Self._5)
                     case 5:
-                        NamedView<ViewCase>(name: "_6", view: Self._6)!
+                        NamedView<ViewCase>(case: ._6, view: Self._6)
                     case 6:
-                        NamedView<ViewCase>(name: "_7", view: Self._7)!
+                        NamedView<ViewCase>(case: ._7, view: Self._7)
                     case 7:
-                        NamedView<ViewCase>(name: "_8", view: Self._8)!
+                        NamedView<ViewCase>(case: ._8, view: Self._8)
                     case 8:
-                        NamedView<ViewCase>(name: "_9", view: Self._9)!
+                        NamedView<ViewCase>(case: ._9, view: Self._9)
                     case 9:
-                        NamedView<ViewCase>(name: "_10", view: Self._10)!
+                        NamedView<ViewCase>(case: ._10, view: Self._10)
                     case 10:
-                        NamedView<ViewCase>(name: "_11", view: Self._11)!
+                        NamedView<ViewCase>(case: ._11, view: Self._11)
                     case 11:
-                        NamedView<ViewCase>(name: "_12", view: Self._12)!
+                        NamedView<ViewCase>(case: ._12, view: Self._12)
                     case 12:
-                        NamedView<ViewCase>(name: "_13", view: Self._13)!
+                        NamedView<ViewCase>(case: ._13, view: Self._13)
                     case 13:
-                        NamedView<ViewCase>(name: "_14", view: Self._14)!
+                        NamedView<ViewCase>(case: ._14, view: Self._14)
                     case 14:
-                        NamedView<ViewCase>(name: "_15", view: Self._15)!
+                        NamedView<ViewCase>(case: ._15, view: Self._15)
                     default:
                         nil
                     }
@@ -420,7 +420,7 @@ final class AddPreviewsTests: XCTestCase {
 
                     return switch iterator {
                     case 0:
-                        NamedView<ViewCase>(name: "myView", view: Self.myView)!
+                        NamedView<ViewCase>(case: .myView, view: Self.myView)
                     default:
                         nil
                     }
@@ -480,7 +480,7 @@ final class AddPreviewsTests: XCTestCase {
 
                     return switch iterator {
                     case 0:
-                        NamedView<ViewCase>(name: "myView", view: Self.myView)!
+                        NamedView<ViewCase>(case: .myView, view: Self.myView)
                     default:
                         nil
                     }
@@ -540,7 +540,7 @@ final class AddPreviewsTests: XCTestCase {
 
                     return switch iterator {
                     case 0:
-                        NamedView<ViewCase>(name: "myView", view: Self.myView)!
+                        NamedView<ViewCase>(case: .myView, view: Self.myView)
                     default:
                         nil
                     }
