@@ -21,4 +21,13 @@ final class NamedViewTests: XCTestCase {
         XCTAssertEqual(NamedView<ViewCase>(case: .one, view: EmptyView()).case, .one)
         XCTAssertEqual(NamedView<ViewCase>(case: .two, view: EmptyView()).case, .two)
     }
+
+    func testBodyIsTypeErasedView() {
+        XCTAssertTrue(NamedView<ViewCase>(case: .one, view: EmptyView()).body is AnyView)
+    }
+
+    func testNameIsCaseRawValue() {
+        XCTAssertEqual(NamedView<ViewCase>(case: .one, view: EmptyView()).name, "one")
+        XCTAssertEqual(NamedView<ViewCase>(case: .two, view: EmptyView()).name, "two")
+    }
 }
