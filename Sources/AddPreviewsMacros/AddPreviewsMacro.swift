@@ -99,7 +99,7 @@ private func iteratorNextDeclaration(viewProperties: [ViewProperty]) -> DeclSynt
         let identifier = viewProperty.identifier
         decl += """
         case \(count):
-            NamedView<ViewCase>(name: \"\(identifier)\", view: Self.\(identifier))
+            NamedView<ViewCase>(name: \"\(identifier)\", view: Self.\(identifier))!
 
         """
     }

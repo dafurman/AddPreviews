@@ -12,11 +12,12 @@ public struct NamedView<Case: NamedViewCase> {
     public let `case`: Case
     public let view: any View
 
-    /// - Warning: This initializer is not safe to be invoked manually - it's just meant for use directly within `@AddPreviews`. If you must invoke this manually, ensure that `name` matches a case within `Case`.
-    public init(name: String, view: any View) {
+    /// - Warning: This initializer isn't meant to be used directly - outside of the `@AddPreviews` macro. It will fail if `name` does not match the raw value of a case in `Case`.
+    public init?(name: String, view: any View) {
         self.name = name
         self.view = view
-        self.case = Case(rawValue: name)!
+        guard let `case` = Case(rawValue: name) else { return nil }
+        self.case = `case`
     }
 }
 
