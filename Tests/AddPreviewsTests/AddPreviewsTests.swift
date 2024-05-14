@@ -53,28 +53,38 @@ final class AddPreviewsTests: XCTestCase {
                 static private var privateNonViewProperty: Int { 0 }
                 var nonStaticView: some View { EmptyView() }
 
+                enum ViewCase: String, NamedViewCase {
+                    case fileprivateView
+                    case internalView
+                    case explicitlyInternalView
+                    case publicView
+                    case letView
+                    case nonViewProperty
+                    case nonStaticView
+                }
+
                 private var iterator = 0
 
-                mutating func next() -> (any NamedView)? {
+                mutating func next() -> NamedView<ViewCase>? {
                     defer {
                         iterator += 1
                     }
 
                     return switch iterator {
                     case 0:
-                    	_ConcreteNamedView(name: "fileprivateView", view: Self.fileprivateView)
+                        NamedView<ViewCase>(name: "fileprivateView", view: Self.fileprivateView)
                     case 1:
-                    	_ConcreteNamedView(name: "internalView", view: Self.internalView)
+                        NamedView<ViewCase>(name: "internalView", view: Self.internalView)
                     case 2:
-                    	_ConcreteNamedView(name: "explicitlyInternalView", view: Self.explicitlyInternalView)
+                        NamedView<ViewCase>(name: "explicitlyInternalView", view: Self.explicitlyInternalView)
                     case 3:
-                    	_ConcreteNamedView(name: "publicView", view: Self.publicView)
+                        NamedView<ViewCase>(name: "publicView", view: Self.publicView)
                     case 4:
-                        Self.letView
+                        NamedView<ViewCase>(name: "letView", view: Self.letView)
                     case 5:
-                        Self.nonViewProperty
+                        NamedView<ViewCase>(name: "nonViewProperty", view: Self.nonViewProperty)
                     case 6:
-                    	_ConcreteNamedView(name: "nonStaticView", view: Self.nonStaticView)
+                        NamedView<ViewCase>(name: "nonStaticView", view: Self.nonStaticView)
                     default:
                         nil
                     }
@@ -114,20 +124,26 @@ final class AddPreviewsTests: XCTestCase {
                 static var someView: some View { EmptyView() }
                 static var anyView: any View { EmptyView() }
 
+                enum ViewCase: String, NamedViewCase {
+                    case view
+                    case someView
+                    case anyView
+                }
+
                 private var iterator = 0
 
-                mutating func next() -> (any NamedView)? {
+                mutating func next() -> NamedView<ViewCase>? {
                     defer {
                         iterator += 1
                     }
 
                     return switch iterator {
                     case 0:
-                        Self.view
+                        NamedView<ViewCase>(name: "view", view: Self.view)
                     case 1:
-                    	_ConcreteNamedView(name: "someView", view: Self.someView)
+                        NamedView<ViewCase>(name: "someView", view: Self.someView)
                     case 2:
-                    	_ConcreteNamedView(name: "anyView", view: Self.anyView)
+                        NamedView<ViewCase>(name: "anyView", view: Self.anyView)
                     default:
                         nil
                     }
@@ -211,44 +227,62 @@ final class AddPreviewsTests: XCTestCase {
                 var _14: some View { EmptyView() }
                 var _15: some View { EmptyView() }
 
+                enum ViewCase: String, NamedViewCase {
+                    case _1
+                    case _2
+                    case _3
+                    case _4
+                    case _5
+                    case _6
+                    case _7
+                    case _8
+                    case _9
+                    case _10
+                    case _11
+                    case _12
+                    case _13
+                    case _14
+                    case _15
+                }
+
                 private var iterator = 0
 
-                mutating func next() -> (any NamedView)? {
+                mutating func next() -> NamedView<ViewCase>? {
                     defer {
                         iterator += 1
                     }
 
                     return switch iterator {
                     case 0:
-                    	_ConcreteNamedView(name: "_1", view: Self._1)
+                        NamedView<ViewCase>(name: "_1", view: Self._1)
                     case 1:
-                    	_ConcreteNamedView(name: "_2", view: Self._2)
+                        NamedView<ViewCase>(name: "_2", view: Self._2)
                     case 2:
-                    	_ConcreteNamedView(name: "_3", view: Self._3)
+                        NamedView<ViewCase>(name: "_3", view: Self._3)
                     case 3:
-                    	_ConcreteNamedView(name: "_4", view: Self._4)
+                        NamedView<ViewCase>(name: "_4", view: Self._4)
                     case 4:
-                    	_ConcreteNamedView(name: "_5", view: Self._5)
+                        NamedView<ViewCase>(name: "_5", view: Self._5)
                     case 5:
-                    	_ConcreteNamedView(name: "_6", view: Self._6)
+                        NamedView<ViewCase>(name: "_6", view: Self._6)
                     case 6:
-                    	_ConcreteNamedView(name: "_7", view: Self._7)
+                        NamedView<ViewCase>(name: "_7", view: Self._7)
                     case 7:
-                    	_ConcreteNamedView(name: "_8", view: Self._8)
+                        NamedView<ViewCase>(name: "_8", view: Self._8)
                     case 8:
-                    	_ConcreteNamedView(name: "_9", view: Self._9)
+                        NamedView<ViewCase>(name: "_9", view: Self._9)
                     case 9:
-                    	_ConcreteNamedView(name: "_10", view: Self._10)
+                        NamedView<ViewCase>(name: "_10", view: Self._10)
                     case 10:
-                    	_ConcreteNamedView(name: "_11", view: Self._11)
+                        NamedView<ViewCase>(name: "_11", view: Self._11)
                     case 11:
-                    	_ConcreteNamedView(name: "_12", view: Self._12)
+                        NamedView<ViewCase>(name: "_12", view: Self._12)
                     case 12:
-                    	_ConcreteNamedView(name: "_13", view: Self._13)
+                        NamedView<ViewCase>(name: "_13", view: Self._13)
                     case 13:
-                    	_ConcreteNamedView(name: "_14", view: Self._14)
+                        NamedView<ViewCase>(name: "_14", view: Self._14)
                     case 14:
-                    	_ConcreteNamedView(name: "_15", view: Self._15)
+                        NamedView<ViewCase>(name: "_15", view: Self._15)
                     default:
                         nil
                     }
@@ -373,16 +407,20 @@ final class AddPreviewsTests: XCTestCase {
             struct MyView_Previews {
                 var myView: some View { EmptyView() }
 
+                enum ViewCase: String, NamedViewCase {
+                    case myView
+                }
+
                 private var iterator = 0
 
-                mutating func next() -> (any NamedView)? {
+                mutating func next() -> NamedView<ViewCase>? {
                     defer {
                         iterator += 1
                     }
 
                     return switch iterator {
                     case 0:
-                    	_ConcreteNamedView(name: "myView", view: Self.myView)
+                        NamedView<ViewCase>(name: "myView", view: Self.myView)
                     default:
                         nil
                     }
@@ -429,16 +467,20 @@ final class AddPreviewsTests: XCTestCase {
             struct MyView_Previews {
                 var myView: some View { EmptyView() }
 
+                enum ViewCase: String, NamedViewCase {
+                    case myView
+                }
+
                 private var iterator = 0
 
-                mutating func next() -> (any NamedView)? {
+                mutating func next() -> NamedView<ViewCase>? {
                     defer {
                         iterator += 1
                     }
 
                     return switch iterator {
                     case 0:
-                    	_ConcreteNamedView(name: "myView", view: Self.myView)
+                        NamedView<ViewCase>(name: "myView", view: Self.myView)
                     default:
                         nil
                     }
@@ -485,16 +527,20 @@ final class AddPreviewsTests: XCTestCase {
             struct MyView_Previews {
                 var myView: some View { EmptyView() }
 
+                enum ViewCase: String, NamedViewCase {
+                    case myView
+                }
+
                 private var iterator = 0
 
-                mutating func next() -> (any NamedView)? {
+                mutating func next() -> NamedView<ViewCase>? {
                     defer {
                         iterator += 1
                     }
 
                     return switch iterator {
                     case 0:
-                    	_ConcreteNamedView(name: "myView", view: Self.myView)
+                        NamedView<ViewCase>(name: "myView", view: Self.myView)
                     default:
                         nil
                     }

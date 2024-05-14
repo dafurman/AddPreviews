@@ -73,6 +73,7 @@ extension AddPreviews: MemberMacro {
             .map { "\($0).previewDisplayName(\"\($0)\")" }
 
         return [
+            enumDeclaration(viewProperties: viewProperties),
             iteratorDeclaration,
             iteratorNextDeclaration(viewProperties: viewProperties),
             previewsDeclaration(statements: rawMembers),
@@ -88,22 +89,19 @@ extension AddPreviews: ExtensionMacro {
 
 private func iteratorNextDeclaration(viewProperties: [ViewProperty]) -> DeclSyntax {
     var decl = """
-    mutating func next() -> (any NamedView)? {
+    mutating func next() -> NamedView<ViewCase>? {
     defer { iterator += 1 }
 
     return switch iterator {
     """
 
     for (count, viewProperty) in viewProperties.enumerated() {
-        decl += "case \(count):\n"
+        let identifier = viewProperty.identifier
+        decl += """
+        case \(count):
+            NamedView<ViewCase>(name: \"\(identifier)\", view: Self.\(identifier))
 
-        if viewProperty.isGenericView {
-            let identifier = viewProperty.identifier
-            decl += "\t_ConcreteNamedView(name: \"\(identifier)\", view: Self.\(identifier))"
-        } else {
-            decl += "Self.\(viewProperty.identifier)"
-        }
-        decl += "\n"
+        """
     }
     decl += """
     default:
@@ -122,6 +120,15 @@ private func previewsDeclaration(statements: [String]) -> DeclSyntax {
     var string = "static var previews: some View {"
     for statement in statements {
         string += statement + "\n"
+    }
+    string += "}"
+    return DeclSyntax(stringLiteral: string)
+}
+
+private func enumDeclaration(viewProperties: [ViewProperty]) -> DeclSyntax {
+    var string = "enum ViewCase: String, NamedViewCase {"
+    for property in viewProperties {
+        string += "case " + property.identifier + "\n"
     }
     string += "}"
     return DeclSyntax(stringLiteral: string)

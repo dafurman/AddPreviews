@@ -39,6 +39,7 @@ let package = Package(
         .testTarget(
             name: "AddPreviewsTests",
             dependencies: [
+                "AddPreviews",
                 "AddPreviewsMacros",
                 .product(name: "MacroTesting", package: "swift-macro-testing"),
                 .product(name: "SwiftSyntaxMacrosTestSupport", package: "swift-syntax"),
